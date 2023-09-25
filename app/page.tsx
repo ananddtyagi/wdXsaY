@@ -1,6 +1,18 @@
-import Image from 'next/image'
+"use client";
+export const dynamicParams = true
+
+import { useState } from "react";
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export default function Home() {
+  const searchParams = useSearchParams()
+  const params = new URLSearchParams(searchParams)
+
+  const setSource = (newSource: string) => {
+    console.log(newSource)
+    params.set("source", newSource)
+  }
+
   return(
     <main>
       <div className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
@@ -9,9 +21,13 @@ export default function Home() {
           <select
             id="source"
             name="source"
+            value={searchParams.get("source") ?? ""}
+            onChange={(e) => setSource(e.target.value)}
             className="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-10 mx-5 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
           >
-            <option>Hello</option>
+            <option value="" selected disabled hidden>Select an option...</option>
+            <option value="hello">Hello</option>
+            <option value="world">World</option>
           </select>          
           say about
           <input
@@ -21,9 +37,6 @@ export default function Home() {
             id="query"
           >
           </input>
-          <a href="/api/getInsights">
-            <code className="font-mono font-bold">api/index.py</code>
-          </a>
           <input 
             type="submit" 
             value="Let's find out!"
