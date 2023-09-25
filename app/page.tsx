@@ -21,6 +21,15 @@ export default function Home() {
             id="query"
           >
           </input>
+          <a href="/api/getInsights">
+            <code className="font-mono font-bold">api/index.py</code>
+          </a>
+          <input 
+            type="submit" 
+            value="Let's find out!"
+            className="rounded-md ring-1 ring-inset ring-gray-300 px-5 py-1 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
+          >	
+          </input>
         </form>
       </div>
     </main>

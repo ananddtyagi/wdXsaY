@@ -1,9 +1,11 @@
 {
-  "name": "client",
+  "name": "wdXsaY",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "fastapi-dev": "poetry install && python3 -m uvicorn api.index:app --reload",
+    "dev": "concurrently \"bun run next-dev\" \"poetry run fastapi-dev\"",
+    "next-dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -11,14 +13,19 @@
   "dependencies": {
     "@types/node": "20.6.5",
     "@types/react": "18.2.22",
-    "@types/react-dom": "18.2.7", 
+    "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.16",
+    "concurrently": "^8.2.1",
     "eslint": "8.50.0",
     "eslint-config-next": "13.5.2",
+    "fastapi": "^0.0.8",
     "next": "13.5.2",
     "postcss": "8.4.30",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "steam-web": "^0.7.0",
+    "stream": "^0.0.2",
+    "stream-web": "^0.5.2",
     "tailwindcss": "3.3.3",
     "typescript": "5.2.2"
   }
