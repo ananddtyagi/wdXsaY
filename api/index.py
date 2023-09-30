@@ -2,9 +2,11 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+
 @app.get("/api/getInsights")
 def getInsights():
     return {"message": "Hello World"}
 
+
 if __name__ == "__main__":
-  app.run()
+    app.run()

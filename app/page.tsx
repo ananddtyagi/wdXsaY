@@ -2,15 +2,20 @@
 export const dynamicParams = true
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 
 export default function Home() {
   const searchParams = useSearchParams()
   const params = new URLSearchParams(searchParams)
+  const pathname = usePathname()
+  const router = useRouter()
+
 
   const setSource = (newSource: string) => {
     console.log(newSource)
     params.set("source", newSource)
+
+    router.push(pathname + "?" + params.toString())
   }
 
   return(
@@ -25,7 +30,7 @@ export default function Home() {
             onChange={(e) => setSource(e.target.value)}
             className="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-10 mx-5 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
           >
-            <option value="" selected disabled hidden>Select an option...</option>
+            <option value="" disabled hidden>Select an option...</option>
             <option value="hello">Hello</option>
             <option value="world">World</option>
           </select>          
