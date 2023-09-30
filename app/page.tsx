@@ -31,8 +31,8 @@ export default function Home() {
             className="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-10 mx-5 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
           >
             <option value="" disabled hidden>Select an option...</option>
-            <option value="hello">Hello</option>
-            <option value="world">World</option>
+            <option value="clean-code">Clean Code</option>
+
           </select>          
           say about
           <input
