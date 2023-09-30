@@ -13,6 +13,6 @@ if __name__ == '__main__':
     documents = getDocuments()
 
     vectorstore = FAISS.from_documents(documents, embedding=OpenAIEmbeddings())
-    vectorstore.save_local("faiss_index_clean_code")
+    vectorstore.save_local("./api/vectorstores/faiss_index_clean_code")
 
 

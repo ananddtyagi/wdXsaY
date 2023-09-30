@@ -17,7 +17,7 @@ import os
 def getInsights(question=""):
     if question == "":
         return []
-    vectorstore = FAISS.load_local("./faiss_index_clean_code", embeddings=OpenAIEmbeddings())
+    vectorstore = FAISS.load_local("./api/vectorstores/faiss_index_clean_code", embeddings=OpenAIEmbeddings())
 
     retriever = vectorstore.as_retriever()
     template = \
@@ -50,4 +50,4 @@ def getInsights(question=""):
 
 
 if __name__ == "__main__":
-    getInsights()
+    getInsights("what does Clean Code say about comments")
