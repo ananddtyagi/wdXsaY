@@ -48,7 +48,7 @@ export default function Home() {
         <form
             onSubmit={onSubmit}
         >
-            What did
+            What does
           <select
             id="source"
             name="source"
