@@ -5,6 +5,16 @@ from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
 
 import os
+from dotenv import load_dotenv
+
+# Load the environment variable specifying the current environment
+current_environment = os.environ.get('ENVIRONMENT', 'local')
+
+# Determine the appropriate .env file based on the current environment
+dotenv_file = f'.env.{current_environment}'
+
+# Load environment variables from the selected .env file
+load_dotenv(dotenv_file)
 
 """
 1. Fetch Relevant Source
@@ -13,6 +23,8 @@ import os
 4. Return generated answer
 """
 
+def generateQuestion(source, query):
+    return f"What does {source} say about {query}?"
 
 def generateInsights(question=""):
     OPEN_AI_KEY = os.environ['OPEN_AI_KEY']
@@ -48,5 +60,7 @@ def generateInsights(question=""):
     return answer
 
 
-# if __name__ == "__main__":
-#     generateInsights("what does Clean Code say about comments")
+if __name__ == "__main__":
+    query = input("What does Clean Code say about ____\n")
+    question = generateQuestion(source="Clean Code", query=query)
+    print(generateInsights(question))
