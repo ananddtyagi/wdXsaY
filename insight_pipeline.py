@@ -14,10 +14,11 @@ import os
 """
 
 
-def getInsights(question=""):
+def generateInsights(question=""):
+    OPEN_AI_KEY = os.environ['OPEN_AI_KEY']
     if question == "":
         return []
-    vectorstore = FAISS.load_local("./api/vectorstores/faiss_index_clean_code", embeddings=OpenAIEmbeddings())
+    vectorstore = FAISS.load_local("./api/vectorstores/faiss_index_clean_code", embeddings=OpenAIEmbeddings(openai_api_key=OPEN_AI_KEY))
 
     retriever = vectorstore.as_retriever()
     template = \
@@ -36,7 +37,7 @@ def getInsights(question=""):
     chain_type_kwargs = {"prompt": prompt_template}
 
     chain = RetrievalQAWithSourcesChain.from_chain_type(
-        llm=OpenAI(temperature=0),
+        llm=OpenAI(temperature=0, openai_api_key=OPEN_AI_KEY),
         retriever=retriever,
         chain_type_kwargs=chain_type_kwargs,
         return_source_documents=True
@@ -44,10 +45,8 @@ def getInsights(question=""):
 
     answer = chain({"question": question})
 
-    print(answer)
-
-    return
+    return answer
 
 
-if __name__ == "__main__":
-    getInsights("what does Clean Code say about comments")
+# if __name__ == "__main__":
+#     generateInsights("what does Clean Code say about comments")
