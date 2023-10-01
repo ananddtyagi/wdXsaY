@@ -3,7 +3,7 @@ from fastapi import FastAPI
 app = FastAPI()
 
 
-@app.get("/api/getInsights")
+@app.post("/api/getInsights")
 def getInsights():
     return {"message": "Hello World"}
 
