@@ -3,11 +3,15 @@ from langchain.vectorstores import FAISS
 from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
+import pickle as pkl
+import json
 
 import os
 from dotenv import load_dotenv
 
 # Load the environment variable specifying the current environment
+from api.test import testing
+
 current_environment = os.environ.get('ENVIRONMENT', 'local')
 
 # Determine the appropriate .env file based on the current environment
@@ -56,8 +60,11 @@ def generateInsights(question=""):
     )
 
     answer = chain({"question": question})
+    
+    with open("saved_answer.pkl", "wb") as f:
+        pkl.dump(answer, f)
 
-    return answer
+    return dict(answer)
 
 
 if __name__ == "__main__":
