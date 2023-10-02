@@ -11,21 +11,14 @@ export default function Home() {
   const pathname = usePathname()
   const router = useRouter()
   const [source, setSource] = useState(searchParams.get("source") ?? "")
-  const [question, setQuestion] = useState(searchParams.get("question") ?? "")
-  const [insights, setInsights] = useState("")
-
-  const setSourceParam = (newSource: string) => {
-    setSource(newSource)
-  }
-
-  const setQuestionParam = (newQuestion: string) => {
-    setQuestion(newQuestion)
-  };
+  const [query, setQuery] = useState(searchParams.get("query") ?? "")
+  const [answer, setAnswer] = useState("")
+  const [citations, setCitations] = useState([])
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
 
       params.set("source", source)
-      params.set("question", question)
+      params.set("query", query)
 
       event.preventDefault();
       const response  = await fetch(`api/getInsights/?${params.toString()}`, {
@@ -33,13 +26,14 @@ export default function Home() {
       });
 
       const result = await response.json();
-      setInsights(result.message)
+      setAnswer(result.answer)
+      setCitations(result.source_documents)
       router.push(pathname + "?" + params.toString())
   }
 
 
   return(
-    <main>
+    <>
       <div className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
         <form
             onSubmit={onSubmit}
@@ -49,7 +43,7 @@ export default function Home() {
             id="source"
             name="source"
             value={source}
-            onChange={(e) => setSourceParam(e.target.value)}
+            onChange={(e) => setSource(e.target.value)}
             className="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-10 mx-5 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
           >
             <option value="" disabled hidden>Select an option...</option>
@@ -59,11 +53,11 @@ export default function Home() {
           say about
           <input
             type="text"
-            name="question"
+            name="query"
             className="rounded-md border-0 py-1.5 pl-3 pr-10 mx-5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            id="question"
-            value={question}
-            onChange={(e) => setQuestionParam(e.target.value)}
+            id="query"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
           >
           </input>
           <input 
@@ -73,10 +67,32 @@ export default function Home() {
           >	
           </input>
         </form>
-        <div>
-          {insights}
-        </div>
+        {answer && 
+          <div className="m-5">
+
+            <div>
+              <h1>Answer</h1>
+              <p className="py-5 sm:text-sm">{answer}</p>
+
+            </div>
+            <div className="py-2">
+              <h1>Citations</h1>
+              <div className="py-5">
+              {citations.map((citation) => {
+                return (
+                  <div className="py-4">
+                    <p>Page: {citation.metadata.page}</p>
+                    <p>{citation.page_content}</p>
+                  </div>
+
+                )
+              })}
+              </div>
+            </div>
+          </div>
+        }
+
       </div>
-    </main>
+    </>
   )
 }
