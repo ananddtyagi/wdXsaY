@@ -86,9 +86,9 @@ export default function Home() {
             <div className="py-5">
             {citations.map((citation) => {
               return (
-                <div className="py-4">
-                  <p>Page: {citation.metadata.page}</p>
-                  <p>{citation.page_content}</p>
+                  <div key={citation["metadata.page"]} className="py-4">
+                  <p>Page: {citation["metadata.page"]}</p>
+                  <p>{citation["page_content"]}</p>
                 </div>
 
               )
