@@ -12,13 +12,13 @@ from dotenv import load_dotenv
 # Load the environment variable specifying the current environment
 from api.test import testing
 
-current_environment = os.environ.get('ENVIRONMENT', 'local')
+# current_environment = os.environ.get('ENVIRONMENT', 'local')
 
-# Determine the appropriate .env file based on the current environment
-dotenv_file = f'.env.{current_environment}'
+# # Determine the appropriate .env file based on the current environment
+# dotenv_file = f'.env.{current_environment}'
 
-# Load environment variables from the selected .env file
-load_dotenv(dotenv_file)
+# # Load environment variables from the selected .env file
+# load_dotenv(dotenv_file)
 
 """
 1. Fetch Relevant Source
