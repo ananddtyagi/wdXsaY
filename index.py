@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from api.insight_pipeline import generateInsights, generateQuestion
+from insight_pipeline import generateInsights, generateQuestion
 
 app = FastAPI()
 

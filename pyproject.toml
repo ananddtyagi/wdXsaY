@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "server"
+version = "0.1.0"
+description = ""
+authors = ["Anand Tyagi <anand.deep.tyagi@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.103.1"
+uvicorn = {extras = ["standard"], version = "^0.23.2"}
+gunicorn = "^21.2.0"
+langchain = "^0.0.304"
+openai = "^0.28.1"
+faiss-cpu = "^1.7.4"
+tiktoken = "^0.5.1"
+pypdf = "^3.16.2"
+poetry-dotenv-plugin = "^0.2.0"
+python-dotenv = "^1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+start = "api.index:start"
