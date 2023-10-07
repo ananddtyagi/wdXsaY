@@ -10,7 +10,6 @@ import os
 from dotenv import load_dotenv
 
 # Load the environment variable specifying the current environment
-from api.test import testing
 
 # current_environment = os.environ.get('ENVIRONMENT', 'local')
 

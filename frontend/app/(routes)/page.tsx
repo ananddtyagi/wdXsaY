@@ -16,7 +16,7 @@ export default function Home() {
   const [citations, setCitations] = useState([])
 
   const getAnswer = async () => {
-    const response = await fetch(`api/getInsights/?${params.toString()}`, {
+    const response = await fetch(`http://0.0.0.0:8000/api/getInsights/?${params.toString()}`, {
         method: 'GET',
       });
 
