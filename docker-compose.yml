@@ -2,7 +2,7 @@ version: '3'
 services:
   frontend:
     build:
-      context: ./app
+      context: ./frontend
       dockerfile: Dockerfile
     ports:
       - "3000:3000"  # Adjust the port mapping as needed
@@ -12,6 +12,8 @@ services:
     build:
       context: ./api
       dockerfile: Dockerfile
+    env_file:
+      - .env
     ports:
       - "8000:8000"  # Adjust the port mapping as needed
     # Add any other backend service configuration here
