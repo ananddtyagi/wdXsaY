@@ -13,7 +13,5 @@ RUN pip install --no-cache-dir poetry && poetry install
 # Expose port (FastAPI: 8000)
 EXPOSE 8000
 
-RUN echo "$PWD"
-
 # Start the FastAPI application
 CMD ["poetry", "run", "uvicorn", "index:app", "--host", "0.0.0.0", "--port", "8000"]
