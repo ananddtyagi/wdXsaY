@@ -17,6 +17,7 @@ tiktoken = "^0.5.1"
 pypdf = "^3.16.2"
 poetry-dotenv-plugin = "^0.2.0"
 python-dotenv = "^1.0.0"
+python-multipart = "^0.0.6"
 
 
 [build-system]

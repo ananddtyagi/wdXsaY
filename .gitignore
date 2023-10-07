@@ -35,4 +35,5 @@ yarn-error.log*
 frontend/next-env.d.ts
 
 # local files
-api/sources/*
+api/sources/
+api/temp/
