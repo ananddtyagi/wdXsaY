@@ -3,6 +3,9 @@
 # pycharm
 .idea
 
+# vscode
+.vscode
+
 # dependencies
 frontend/node_modules
 /.pnp
