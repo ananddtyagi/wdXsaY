@@ -8,7 +8,7 @@ app = FastAPI()
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "wdxsay.vercel.app"],  # Replace with your frontend URL(s)
+    allow_origins=["http://localhost:3000", "https://wdxsay.vercel.app"],  # Replace with your frontend URL(s)
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
