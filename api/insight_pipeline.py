@@ -33,7 +33,7 @@ def generateInsights(question=""):
     OPEN_AI_KEY = os.environ['OPEN_AI_KEY']
     if question == "":
         return []
-    vectorstore = FAISS.load_local("./vectorstores/faiss_index_clean_code", embeddings=OpenAIEmbeddings(openai_api_key=OPEN_AI_KEY))
+    vectorstore = FAISS.load_local("vectorstores/faiss_index_clean_code_spacy_splitter", embeddings=OpenAIEmbeddings(openai_api_key=OPEN_AI_KEY))
 
     retriever = vectorstore.as_retriever()
     template = \
