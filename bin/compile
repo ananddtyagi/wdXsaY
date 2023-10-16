@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-# bin/compile <build-dir> <cache-dir> <env-dir>
+#!/usr/bin/.env bash
+# bin/compile <build-dir> <cache-dir> <.env-dir>
 
 # used for inline heroku buildpack
 
