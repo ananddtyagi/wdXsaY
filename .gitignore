@@ -40,3 +40,5 @@ frontend/next-env.d.ts
 # local files
 api/sources/
 api/temp/
+
+**/wdxsay-*.json

@@ -4,6 +4,7 @@ export const dynamicParams = true
 import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { FormEvent } from 'react';
+import FileUpload from '@/components/FileUpload';
 
 export default function Home() {
   const searchParams = useSearchParams()
@@ -41,6 +42,7 @@ export default function Home() {
 
   return(
     <div className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+      <FileUpload/>
       <form
           onSubmit={onSubmit}
       >
