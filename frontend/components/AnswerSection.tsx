@@ -4,7 +4,7 @@ type Props = {
     citations: [{metadata: {page: string}, page_content: string}];
 }
 
-export default function AnswerSection({answer, citations}: Props) {
+export default function AnswerSection({answer, citations=[]}: Props) {
 
     if(answer) {
      return (
