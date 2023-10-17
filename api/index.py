@@ -4,10 +4,9 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import storage
 
-import os
 import time
 
-from insight_pipeline import generateInsights, generateQuestion
+from insight_pipeline import generateInsightsCustom, generateQuestion
 from generate_vectorstore import generateVectorStores
 
 BUCKET = "staging.wdxsay.appspot.com"
@@ -36,7 +35,7 @@ app.add_middleware(
 @app.get("/api/getInsights")
 async def getInsights(source: str, query: str):
     question = generateQuestion(source, query)
-    insights = generateInsights(question)
+    insights = generateInsightsCustom(source, question)
     return insights
 
 @app.post("/api/uploadfile")
@@ -55,7 +54,10 @@ async def createUploadFile(file: UploadFile):
 
     bucket = storage.bucket()
     fileStart = time.perf_counter()
-    blob = bucket.blob(file.filename.rsplit(".")[0])
+    
+    # TODO: Fix bug where if .pdf doesn't exist in string.
+    vectorstore_filename = file.filename.rsplit(".pdf")[0]
+    blob = bucket.blob(vectorstore_filename)
 
     # https://cloud.google.com/python/docs/reference/storage/latest/google.cloud.storage.blob.Blob?authuser=0#google_cloud_storage_blob_Blob_upload_from_string
     blob.upload_from_string(vs_bytes, content_type="application/octet-stream")
@@ -63,7 +65,7 @@ async def createUploadFile(file: UploadFile):
 
     print(f"Uploading File Took {fileEnd - fileStart:0.4f} seconds")
 
-    return {"filename": file.filename}
+    return {"filename": vectorstore_filename}
 
 if __name__ == "__main__":
     app.run()

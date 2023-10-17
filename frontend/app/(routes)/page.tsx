@@ -11,20 +11,28 @@ export default function Home() {
   const params = new URLSearchParams(searchParams)
   const pathname = usePathname()
   const router = useRouter()
-  const [source, setSource] = useState(searchParams.get("source") ?? "")
+  const [source, setSource] = useState<string>(searchParams.get("source") ?? "")
   const [query, setQuery] = useState(searchParams.get("query") ?? "")
   const [answer, setAnswer] = useState("")
   const [citations, setCitations] = useState([])
 
+  // Clean.Code.A.Handbook.of.Agile.Software.Craftsmanship
   const getAnswer = async () => {
-    const response = await fetch(`https://wdxsay-c04518d7a124.herokuapp.com/api/getInsights/?${params.toString()}`, {
+
+    const urlSearch = new URLSearchParams()
+    urlSearch.set("source", source)
+    urlSearch.set("query", query)
+
+    const devUrl = `http://localhost:8000/api/getInsights/?${urlSearch.toString()}`
+    console.log(devUrl)
+    const response = await fetch(devUrl, {
         method: 'GET',
       });
 
       const result = await response.json();
       setAnswer(result.answer)
       setCitations(result.source_documents)
-      router.push(pathname + "?" + params.toString())
+      // router.push(pathname + "?" + params.toString())
   }
 
   useEffect(() => {
@@ -33,32 +41,23 @@ export default function Home() {
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
 
-      params.set("source", source)
-      params.set("query", query)
+      event.preventDefault()
 
-      getAnswer()
+      if(query.length !== 0 && source.length !== 0){
+        getAnswer()
+      }
   }
 
 
   return(
     <div className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
-      <FileUpload/>
+      <FileUpload onSuccessUpload={(filename: string) => {
+        setSource(filename)
+      }}/>
       <form
           onSubmit={onSubmit}
       >
-          What does
-        <select
-          id="source"
-          name="source"
-          value={source}
-          onChange={(e) => setSource(e.target.value)}
-          className="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-10 mx-5 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-        >
-          <option value="" disabled hidden>Select an option...</option>
-          <option value="Clean Code">Clean Code</option>
-
-        </select>          
-        say about
+          What does {source.length !== 0 ? source : "_______"} say about
         <input
           type="text"
           name="query"
