@@ -4,6 +4,7 @@ export const dynamicParams = true
 import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { FormEvent } from 'react';
+import { AnswerSection } from '@/components/answerSection'
 
 export default function Home() {
   const searchParams = useSearchParams()
@@ -19,7 +20,6 @@ export default function Home() {
     const response = await fetch(`https://wdxsay-c04518d7a124.herokuapp.com/api/getInsights/?${params.toString()}`, {
         method: 'GET',
       });
-
       const result = await response.json();
       setAnswer(result.answer)
       setCitations(result.source_documents)
@@ -73,31 +73,7 @@ export default function Home() {
         >	
         </input>
       </form>
-      {answer && 
-        <div className="box m-5">
-
-          <div className="border rounded border-blue-500 p-5 shadow-lg m-5">
-            <h1>Answer</h1>
-            <p className="py-5 sm:text-sm">{answer}</p>
-
-          </div>
-          <div className="py-2 border rounded border-green-500 p-5 m-5">
-            <h1>Citations</h1>
-            <div className="py-5">
-            {citations.map((citation) => {
-              return (
-                  <div key={citation["metadata.page"]} className="py-4">
-                  <p>Page: {citation["metadata.page"]}</p>
-                  <p>{citation["page_content"]}</p>
-                </div>
-
-              )
-            })}
-            </div>
-          </div>
-        </div>
-      }
-
+      <AnswerSection answer={answer} citations={citations}/>
     </div>
   )
 }
