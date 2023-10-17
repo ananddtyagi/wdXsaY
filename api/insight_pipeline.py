@@ -9,6 +9,8 @@ import json
 import os
 from dotenv import load_dotenv
 
+from gstorage import getVectorstore
+
 # Load the environment variable specifying the current environment
 
 # current_environment = os.environ.get('ENVIRONMENT', 'local')
@@ -65,6 +67,39 @@ def generateInsights(question=""):
 
     return dict(answer)
 
+def generateInsightsCustom(vectorstore_filename: str, question=""):
+    OPEN_AI_KEY = os.environ['OPEN_AI_KEY']
+    if question == "":
+        return []
+    
+    vs_bytes: bytes = getVectorstore(vectorstore_filename)
+    vectorstore = FAISS.deserialize_from_bytes(vs_bytes, embeddings=OpenAIEmbeddings(openai_api_key=OPEN_AI_KEY))
+    retriever = vectorstore.as_retriever()
+    template = \
+    """
+    Given the following extracted parts of a long document and a question, create a final answer with references ("SOURCES"). 
+    If you don't know the answer, just say that you don't know. Don't try to make up an answer.
+    ALWAYS return a "SOURCES" part in your answer.
+    
+    QUESTION: {question}
+    =========
+    {summaries}
+    =========
+    FINAL ANSWER : 
+    SOURCES: """
+    prompt_template = PromptTemplate(template=template, input_variables=["summaries", "question"])
+    chain_type_kwargs = {"prompt": prompt_template}
+
+    chain = RetrievalQAWithSourcesChain.from_chain_type(
+        llm=OpenAI(temperature=0, openai_api_key=OPEN_AI_KEY),
+        retriever=retriever,
+        chain_type_kwargs=chain_type_kwargs,
+        return_source_documents=True
+    )
+
+    answer = chain({"question": question})
+
+    return dict(answer)
 
 if __name__ == "__main__":
     query = input("What does Clean Code say about ____\n")

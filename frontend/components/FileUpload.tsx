@@ -1,4 +1,8 @@
-import { MouseEventHandler, useState } from "react"
+import { useState } from "react"
+
+interface FileUploadProps {
+  onSuccessUpload: (filename: string) => void
+}
 
 enum Status {
   NONE = 1,
@@ -9,7 +13,7 @@ enum Status {
 const prod_url = `https://wdxsay-c04518d7a124.herokuapp.com/`
 const dev_url = `http://localhost:8000`
 
-export default function FileUpload() {
+export default function FileUpload({onSuccessUpload} : FileUploadProps) {
 
   const [file, setFile] = useState<File>()
   const [status, setStatus] = useState<Status>(Status.NONE);
@@ -33,8 +37,12 @@ export default function FileUpload() {
         body: formData
       }).then((res) => {
         if(res.ok) {
-          console.log("success")
-          setStatus(Status.SUCCESS)
+          return res.json()
+        }
+      }).then((data) => {
+        setStatus(Status.SUCCESS)
+        if(data?.filename) {
+          onSuccessUpload(data.filename)
         }
       }).catch((error) => {
         console.log("Failed")
@@ -50,18 +58,25 @@ export default function FileUpload() {
       case Status.FAILED:
         return "bg-red-600"
       case Status.SUCCESS:
-        return "bg-green-500"
+        return "bg-green-500 "
       default:
         return "bg-red-600"
     }
   }
 
-  return(
-    <div className={statusRenderColor()}>
-        <form>
-          <input type="file" onChange={uploadFile} accept="application/pdf" />
-          <button type="submit" onClick={submit}>Upload</button>
-        </form>
-    </div>
-  )
+  if(status === Status.SUCCESS) {
+    return(
+      <div>
+      </div>
+    )
+  } else {
+    return(
+      <div className={statusRenderColor()}>
+          <form>
+            <input type="file" onChange={uploadFile} accept="application/pdf" />
+            <button type="submit" onClick={submit}>Upload</button>
+          </form>
+      </div>
+    )
+  }
 }

@@ -1,12 +1,9 @@
 import os
-import io
 
-from langchain.document_loaders import PyPDFLoader, UnstructuredFileIOLoader
+from langchain.document_loaders import PyPDFLoader
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.text_splitter import SpacyTextSplitter
 from langchain.vectorstores import FAISS
-
-from fastapi import UploadFile
 
 def getDocuments(sourceName=""):
     loader = PyPDFLoader("./sources/Loremipsum.pdf")
