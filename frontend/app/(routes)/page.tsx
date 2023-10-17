@@ -4,7 +4,7 @@ export const dynamicParams = true
 import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { FormEvent } from 'react';
-import { AnswerSection } from '@/components/answerSection'
+import { AnswerSection } from '@/components/AnswerSection'
 
 export default function Home() {
   const searchParams = useSearchParams()

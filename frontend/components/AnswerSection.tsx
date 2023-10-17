@@ -1,7 +1,7 @@
 
 type Props = {
     answer: string;
-    citations: [{metadata: {page: string}, page_content: string}];
+    citations: any[];
 }
 
 export default function AnswerSection({answer, citations=[]}: Props) {
