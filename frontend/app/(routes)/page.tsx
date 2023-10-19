@@ -95,13 +95,7 @@ export default function Home() {
           <span className="sr-only">Loading...</span>
         </div>
       )}
-      {answer && (
-        <AnswerSection
-          answer={answer}
-          loading={loading}
-          citations={citations}
-        />
-      )}
+      {answer && <AnswerSection answer={answer} citations={citations} />}
     </div>
   );
 }

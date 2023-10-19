@@ -1,14 +1,9 @@
 type Props = {
   answer: string;
   citations: any[];
-  loading: boolean;
 };
 
-export default function AnswerSection({
-  answer,
-  loading,
-  citations = [],
-}: Props) {
+export default function AnswerSection({ answer, citations = [] }: Props) {
   return (
     <div className="box m-5">
       <div className="border rounded border-blue-500 p-5 shadow-lg m-5">
