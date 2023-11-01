@@ -58,8 +58,13 @@ G_FIREBASE_CLIENT_URL
 G_FIREBASE_UNIVERSE_DOMAIN
 ```
 
+## Deployment 
 
+For deployment, please remember a couple of points
 
+1. If spinning up a new app, remember to add environment variables
+2. If dependencies are added, we must export them from poetry to requirements.txt
+- `poetry export --without-hashes --format=requirements.txt > requirements.txt`
 
 
 
