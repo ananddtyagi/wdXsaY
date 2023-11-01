@@ -4,12 +4,10 @@ from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
 import pickle as pkl
-import json
 
 import os
-from dotenv import load_dotenv
 
-from gstorage import getVectorstore
+from gfirebase import getVectorstore
 
 # Load the environment variable specifying the current environment
 

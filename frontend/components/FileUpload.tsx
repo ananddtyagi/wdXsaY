@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { BACKEND_URL } from "@/utils/constants"
+import LoadingIcon from "./LoadingIcon"
 
 interface FileUploadProps {
   onSuccessUpload: (filename: string) => void
@@ -7,11 +9,9 @@ interface FileUploadProps {
 enum Status {
   NONE = 1,
   FAILED,
+  PENDING,
   SUCCESS
 }
-
-const prod_url = `https://wdxsay-c04518d7a124.herokuapp.com/`
-const dev_url = `http://localhost:8000`
 
 export default function FileUpload({onSuccessUpload} : FileUploadProps) {
 
@@ -31,7 +31,7 @@ export default function FileUpload({onSuccessUpload} : FileUploadProps) {
       const formData = new FormData();
       formData.append("file", file);
 
-      const url = `${dev_url}/api/uploadfile`
+      const url = `${BACKEND_URL}/api/uploadfile`
       fetch(url, {
         method: "POST",
         body: formData
@@ -47,7 +47,11 @@ export default function FileUpload({onSuccessUpload} : FileUploadProps) {
       }).catch((error) => {
         console.log("Failed")
         setStatus(Status.FAILED)
-      })
+      });
+
+      setStatus(Status.PENDING)
+    } else {
+      window.alert("Please upload a pdf first")
     }
   }
 
@@ -57,10 +61,8 @@ export default function FileUpload({onSuccessUpload} : FileUploadProps) {
         return "" // No color
       case Status.FAILED:
         return "bg-red-600"
-      case Status.SUCCESS:
-        return "bg-green-500 "
       default:
-        return "bg-red-600"
+        return ""
     }
   }
 
@@ -69,13 +71,23 @@ export default function FileUpload({onSuccessUpload} : FileUploadProps) {
       <div>
       </div>
     )
+  } else if(status == Status.PENDING) {
+    return (
+      <div className="place-items-center">
+        <div>Processing... It will take some time</div>
+        <LoadingIcon/>
+      </div>
+    )
   } else {
     return(
-      <div className={statusRenderColor()}>
-          <form>
-            <input type="file" onChange={uploadFile} accept="application/pdf" />
-            <button type="submit" onClick={submit}>Upload</button>
-          </form>
+      <div className="place-items-center">
+        <div className="text-center" >Upload a pdf to continue</div>
+        <br></br>
+        <form className={statusRenderColor()}>
+          <input type="file" onChange={uploadFile} accept="application/pdf" />
+          <button className="py-1 px-4 border rounded" 
+            type="submit" onClick={submit}>Upload</button>
+        </form>
       </div>
     )
   }

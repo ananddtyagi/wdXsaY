@@ -42,3 +42,5 @@ api/sources/
 api/temp/
 
 **/wdxsay-*.json
+
+**/__pycache__
