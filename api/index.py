@@ -25,8 +25,11 @@ async def startup_event():
         'storageBucket': os.environ["G_FIREBASE_BUCKET_URL"]
     })
     
-    spacy.cli.download("en_core_web_lg")
-
+    try:
+        nlp = spacy.load("en_core_web_lg")
+    except: # If not present, we download
+        spacy.cli.download("en_core_web_lg")
+        nlp = spacy.load("en_core_web_lg")
 
 # https://wdxsay.vercel.app
 # Configure CORS
