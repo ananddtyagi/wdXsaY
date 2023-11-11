@@ -20,11 +20,11 @@ async def startup_event():
     load_dotenv()
     cred_dict = get_firebase_creds_dict()
     print(cred_dict['type'])
-    cred = credentials.Certificate(cred_dict)
+    # cred = credentials.Certificate(cred_dict)
 
-    firebase_admin.initialize_app(cred, {
-        'storageBucket': os.environ["G_FIREBASE_BUCKET_URL"]
-    })
+    # firebase_admin.initialize_app(cred, {
+    #     'storageBucket': os.environ["G_FIREBASE_BUCKET_URL"]
+    # })
 
 # https://wdxsay.vercel.app
 # Configure CORS
