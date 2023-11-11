@@ -26,11 +26,8 @@ async def startup_event():
     })
     
     os.makedirs("local_storage", exist_ok=True)
-    try:
-        spacy.load("en_core_web_lg")
-    except:
-        spacy.cli.download("en_core_web_lg")
-        spacy.load("en_core_web_md")
+    spacy.cli.download("en_core_web_lg")
+
 
 # https://wdxsay.vercel.app
 # Configure CORS
