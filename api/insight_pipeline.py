@@ -26,6 +26,21 @@ from gfirebase import getVectorstore
 4. Return generated answer
 """
 
+insight_prompt = \
+    """
+    Given the following extracted parts of a long document and a question, create a final answer with references ("SOURCES"). 
+    If you don't know the answer, just say that you don't know. Don't try to make up an answer.
+    In your answer, do not include the name of your source or file path. Just include the final response itself.
+    ALWAYS return a "SOURCES" part in your answer.
+    
+    QUESTION: {question}
+    =========
+    {summaries}
+    =========
+    FINAL ANSWER : 
+    SOURCES: """
+
+
 def generateQuestion(source, query):
     return f"What does {source} say about {query}?"
 
@@ -36,18 +51,8 @@ def generateInsights(question=""):
     vectorstore = FAISS.load_local("vectorstores/faiss_index_clean_code_spacy_splitter", embeddings=OpenAIEmbeddings(openai_api_key=OPEN_AI_KEY))
 
     retriever = vectorstore.as_retriever()
-    template = \
-    """
-    Given the following extracted parts of a long document and a question, create a final answer with references ("SOURCES"). 
-    If you don't know the answer, just say that you don't know. Don't try to make up an answer.
-    ALWAYS return a "SOURCES" part in your answer.
-    
-    QUESTION: {question}
-    =========
-    {summaries}
-    =========
-    FINAL ANSWER : 
-    SOURCES: """
+    template = insight_prompt
+
     prompt_template = PromptTemplate(template=template, input_variables=["summaries", "question"])
     chain_type_kwargs = {"prompt": prompt_template}
 
@@ -73,18 +78,7 @@ def generateInsightsCustom(vectorstore_filename: str, question=""):
     vs_bytes: bytes = getVectorstore(vectorstore_filename)
     vectorstore = FAISS.deserialize_from_bytes(vs_bytes, embeddings=OpenAIEmbeddings(openai_api_key=OPEN_AI_KEY))
     retriever = vectorstore.as_retriever()
-    template = \
-    """
-    Given the following extracted parts of a long document and a question, create a final answer with references ("SOURCES"). 
-    If you don't know the answer, just say that you don't know. Don't try to make up an answer.
-    ALWAYS return a "SOURCES" part in your answer.
-    
-    QUESTION: {question}
-    =========
-    {summaries}
-    =========
-    FINAL ANSWER : 
-    SOURCES: """
+    template = insight_prompt
     prompt_template = PromptTemplate(template=template, input_variables=["summaries", "question"])
     chain_type_kwargs = {"prompt": prompt_template}
 

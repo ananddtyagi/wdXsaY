@@ -27,9 +27,13 @@ async def startup_event():
 
 # https://wdxsay.vercel.app
 # Configure CORS
+allowed_origins = ["http://localhost:3000"]
+if "FRONTEND_ALLOWED_ORIGIN" in os.environ:
+    allowed_origins.append(os.environ["FRONTEND_ALLOWED_ORIGIN"])
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", os.environ["FRONTEND_ALLOWED_ORIGIN"]],  # Replace with your frontend URL(s)
+    allow_origins=allowed_origins,  # Replace with your frontend URL(s)
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -44,8 +48,8 @@ async def getInsights(source: str, query: str):
 @app.post("/api/uploadfile")
 async def createUploadFile(file: UploadFile):
 
-    file_path = "tmp/" + file.filename
-    with open("tmp/" + file.filename, "wb") as tmp_file:
+    file_path = "local_storage/" + file.filename
+    with open("local_storage/" + file.filename, "wb") as tmp_file:
         contents = await file.read()
         tmp_file.write(contents)
 
