@@ -4,7 +4,7 @@ import firebase_admin
 from firebase_admin import storage
 from firebase_admin import credentials
 from dotenv import load_dotenv
-
+import spacy
 import time
 import os
 
@@ -26,6 +26,11 @@ async def startup_event():
     })
     
     os.makedirs("local_storage", exist_ok=True)
+    try:
+        spacy.load("en_core_web_lg")
+    except:
+        spacy.cli.download("en_core_web_lg")
+        spacy.load("en_core_web_md")
 
 # https://wdxsay.vercel.app
 # Configure CORS
