@@ -19,6 +19,7 @@ app = FastAPI()
 async def startup_event():
     load_dotenv()
     cred_dict = get_firebase_creds_dict()
+    print(cred_dict['type'])
     cred = credentials.Certificate(cred_dict)
 
     firebase_admin.initialize_app(cred, {
@@ -30,7 +31,7 @@ async def startup_event():
 allowed_origins = ["http://localhost:3000"]
 if "FRONTEND_ALLOWED_ORIGIN" in os.environ:
     allowed_origins.append(os.environ["FRONTEND_ALLOWED_ORIGIN"])
-
+    
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,  # Replace with your frontend URL(s)
