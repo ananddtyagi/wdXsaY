@@ -24,6 +24,8 @@ async def startup_event():
     firebase_admin.initialize_app(cred, {
         'storageBucket': os.environ["G_FIREBASE_BUCKET_URL"]
     })
+    
+    os.makedirs("local_storage", exist_ok=True)
 
 # https://wdxsay.vercel.app
 # Configure CORS
