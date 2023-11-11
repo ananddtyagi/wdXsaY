@@ -65,6 +65,7 @@ export default function Home() {
             )
             :
             (
+              <>
               <form onSubmit={onSubmit}>
                 What does&nbsp;
                 {source.length !== 0 ? source : "_______"} say about
@@ -82,13 +83,13 @@ export default function Home() {
                   className="rounded-md ring-1 ring-inset ring-gray-300 px-5 py-1 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
                 ></input>
               </form>
+                {loading && <LoadingIcon />}
+                {answer && <AnswerSection answer={answer} citations={citations} />}
+                </>
             )
 
         }
-        {
-          loading && <LoadingIcon />
-        }
-        {answer && <AnswerSection answer={answer} citations={citations} />}
+
       </main>
 
       <footer className="bottom-0">
