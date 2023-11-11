@@ -18,10 +18,9 @@ pypdf = "^3.16.2"
 poetry-dotenv-plugin = "^0.2.0"
 python-dotenv = "^1.0.0"
 python-multipart = "^0.0.6"
-spacy = "^2.1.4"
-en_core_web_lg = { url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-2.3.1/en_core_web_lg-2.3.1.tar.gz" }
+spacy = "^3.7.1"
+en_core_web_lg = { url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-2.1.0/en_core_web_lg-2.1.0.tar.gz" }
 firebase-admin = "^6.2.0"
-unstructured = {extras = ["pdf"], version = "^0.10.22"}
 
 [build-system]
 requires = ["poetry-core"]
