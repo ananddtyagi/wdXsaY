@@ -56,37 +56,37 @@ export default function Home() {
       <main className="flex-grow grid place-items-center bg-white px-6 py-20 sm:py-32 lg:px-8">
         {
           source.length === 0 ?
-          (
-          <FileUpload
-          onSuccessUpload={(filename: string) => {
-            setSource(filename);
-          }}
-          />
-          ) 
-          : 
-          (
-            <form onSubmit={onSubmit}>
-              What does&nbsp;
-              {source.length !== 0 ? source : "_______"} say about
-              <input
-                type="text"
-                name="query"
-                className="rounded-md border-0 py-1.5 pl-3 pr-10 mx-5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                id="query"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-              ></input>
-              <input
-                type="submit"
-                value="Let's find out!"
-                className="rounded-md ring-1 ring-inset ring-gray-300 px-5 py-1 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
-              ></input>
-            </form>
-          )
+            (
+              <FileUpload
+                onSuccessUpload={(filename: string) => {
+                  setSource(filename);
+                }}
+              />
+            )
+            :
+            (
+              <form onSubmit={onSubmit}>
+                What does&nbsp;
+                {source.length !== 0 ? source : "_______"} say about
+                <input
+                  type="text"
+                  name="query"
+                  className="rounded-md border-0 py-1.5 pl-3 pr-10 mx-5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  id="query"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                ></input>
+                <input
+                  type="submit"
+                  value="Let's find out!"
+                  className="rounded-md ring-1 ring-inset ring-gray-300 px-5 py-1 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
+                ></input>
+              </form>
+            )
 
         }
         {
-          loading && <LoadingIcon/>
+          loading && <LoadingIcon />
         }
         {answer && <AnswerSection answer={answer} citations={citations} />}
       </main>
