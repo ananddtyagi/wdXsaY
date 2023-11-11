@@ -25,7 +25,6 @@ async def startup_event():
         'storageBucket': os.environ["G_FIREBASE_BUCKET_URL"]
     })
     
-    os.makedirs("local_storage", exist_ok=True)
     spacy.cli.download("en_core_web_lg")
 
 
