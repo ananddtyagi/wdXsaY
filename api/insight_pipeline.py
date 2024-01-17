@@ -52,7 +52,7 @@ def generateInsights(question=""):
     chain_type_kwargs = {"prompt": prompt_template}
 
     chain = RetrievalQAWithSourcesChain.from_chain_type(
-        llm=OpenAI(temperature=0, openai_api_key=OPEN_AI_KEY),
+        llm=OpenAI(model_name="gpt-3.5-turbo-instruct", temperature=0, openai_api_key=OPEN_AI_KEY),
         retriever=retriever,
         chain_type_kwargs=chain_type_kwargs,
         return_source_documents=True
@@ -65,6 +65,28 @@ def generateInsights(question=""):
 
     return dict(answer)
 
+def generateInsightsCustom(vectorstore_filename: str, question=""):
+    OPEN_AI_KEY = os.environ['OPEN_AI_KEY']
+    if question == "":
+        return []
+    
+    vs_bytes: bytes = getVectorstore(vectorstore_filename)
+    vectorstore = FAISS.deserialize_from_bytes(vs_bytes, embeddings=OpenAIEmbeddings(openai_api_key=OPEN_AI_KEY))
+    retriever = vectorstore.as_retriever()
+    template = insight_prompt
+    prompt_template = PromptTemplate(template=template, input_variables=["summaries", "question"])
+    chain_type_kwargs = {"prompt": prompt_template}
+
+    chain = RetrievalQAWithSourcesChain.from_chain_type(
+        llm=OpenAI(model_name="gpt-3.5-turbo-instruct", temperature=0, openai_api_key=OPEN_AI_KEY),
+        retriever=retriever,
+        chain_type_kwargs=chain_type_kwargs,
+        return_source_documents=True
+    )
+
+    answer = chain({"question": question})
+
+    return dict(answer)
 
 if __name__ == "__main__":
     query = input("What does Clean Code say about ____\n")
