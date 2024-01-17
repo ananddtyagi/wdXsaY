@@ -52,7 +52,7 @@ def generateInsights(question=""):
     chain_type_kwargs = {"prompt": prompt_template}
 
     chain = RetrievalQAWithSourcesChain.from_chain_type(
-        llm=OpenAI(model_name="gpt-3.5-turbo-instruct", temperature=0, openai_api_key=OPEN_AI_KEY),
+        llm=OpenAI(model_name="davinci-002", temperature=0, openai_api_key=OPEN_AI_KEY),
         retriever=retriever,
         chain_type_kwargs=chain_type_kwargs,
         return_source_documents=True
@@ -78,7 +78,7 @@ def generateInsightsCustom(vectorstore_filename: str, question=""):
     chain_type_kwargs = {"prompt": prompt_template}
 
     chain = RetrievalQAWithSourcesChain.from_chain_type(
-        llm=OpenAI(model_name="gpt-3.5-turbo-instruct", temperature=0, openai_api_key=OPEN_AI_KEY),
+        llm=OpenAI(model_name="davinci-002", temperature=0, openai_api_key=OPEN_AI_KEY),
         retriever=retriever,
         chain_type_kwargs=chain_type_kwargs,
         return_source_documents=True
