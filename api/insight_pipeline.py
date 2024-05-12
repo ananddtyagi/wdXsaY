@@ -27,7 +27,7 @@ from dotenv import load_dotenv
 """
 
 def generateQuestion(source, query):
-    return f"What does {source} say about {query}?"
+    return f"Using the context provided from {source}, what does the text say about {query}?"
 
 def generateInsights(question=""):
     OPEN_AI_KEY = os.environ['OPEN_AI_KEY']
@@ -52,7 +52,7 @@ def generateInsights(question=""):
     chain_type_kwargs = {"prompt": prompt_template}
 
     chain = RetrievalQAWithSourcesChain.from_chain_type(
-        llm=OpenAI(model_name="davinci-002", temperature=0, openai_api_key=OPEN_AI_KEY),
+        llm=OpenAI(model_name="gpt-3.5-turbo-instruct", temperature=0, openai_api_key=OPEN_AI_KEY),
         retriever=retriever,
         chain_type_kwargs=chain_type_kwargs,
         return_source_documents=True
